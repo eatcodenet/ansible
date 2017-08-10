@@ -1,6 +1,6 @@
 ---
 - hosts: all
-  gather_facts: false
+  gather_facts: True
   remote_user: ubuntu
   become: yes
   become_user: root
@@ -11,6 +11,18 @@
       raw: test -e /usr/bin/python || (apt-get install -y python) 
     - name: install SSH keys
       authorized_key:
-          user: root
-          exclusive: no
-          key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+        user: root
+        exclusive: no
+        key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+#    - name: set timezone
+#      timezone: 
+#        name: Europe/London
+    - name: gen locale
+      locale_gen:
+        name: en_GB.UTF-8
+    - name:  set env
+      blockinfile:
+        path: /etc/environment
+        block: |
+          LC_ALL=en_GB.UTF-8
+          LANG=en_GB.UTF-8
