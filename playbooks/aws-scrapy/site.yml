@@ -1,0 +1,8 @@
+---
+- name: AWS scrapy VPC
+  hosts: local
+  roles:
+  - vpc
+  - ec2
+
+

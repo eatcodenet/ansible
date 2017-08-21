@@ -1,0 +1,16 @@
+---
+- name: Create EC2 instance
+  ec2:
+    region: "{{ aws_region }}"
+    key_name: "{{ ec2_key_name }}"
+    instance_type: "{{ ec2_type }}"
+    image: "{{ ec2_ami_id }}"
+    wait: no
+    group_id: "{{ remote_ssh_sg_id }}"
+    count: 1
+    vpc_subnet_id: "{{ public_subnet_id }}"
+    assign_public_ip: yes
+    instance_tags:
+      Name: "{{ec2_key_name}}"
+
+

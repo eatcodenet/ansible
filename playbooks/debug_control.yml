@@ -1,0 +1,20 @@
+---
+- hosts: all
+  gather_facts: False
+  vars:
+    nginx_conf: /etc/niginx
+  tasks:
+    - name: A simple debug xy
+      debug: msg="Test debugging!" verbosity=2
+
+    - name: uptime
+      shell: uptime
+      register: myuptime
+
+    - name: lassy
+      command: "ls /yomama"
+      ignore_errors: true
+      register: meh
+     
+    - debug: var=meh
+
