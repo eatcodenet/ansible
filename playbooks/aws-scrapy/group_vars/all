@@ -11,5 +11,5 @@ private_subnet_1_cidr: '10.1.2.0/24'
 ec2_ami_id: 'ami-ebd02392'
 ec2_type: 't2.small'
 ec2_key_name: 'eatcode-scrapy'
-
+ec2_instance_name: 'eatcode-scrapy
 
