@@ -1,0 +1,16 @@
+---
+# tasks file for mongodb
+- name: Add repository
+  yum_repository:
+    name: mongodb
+    description: Add mongodb YUM repo
+    baseurl: https://repo.mongodb.org/yum/amazon/2013.03/mongodb-org/3.0/x86_64/
+
+- name: Install mongodb
+  yum: pkg={{item}} state=installed
+  with_items:
+    - python35
+    - mongodb-server
+    - mongodb-shell
+
+

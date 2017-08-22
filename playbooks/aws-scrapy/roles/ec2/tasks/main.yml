@@ -1,5 +1,23 @@
 ---
-- name: Create EC2 instances
+- name: List running EC2 instances with name
+  ec2_remote_facts:
+    region: "{{ aws_region }}"
+    filters:
+      "tag:Name": "{{ ec2_instance_name }}"
+  register: ec2
+
+- name: debug
+  debug: var=ec2
+
+- name: Delete EC2 instances with same name
+  ec2:
+    region: "{{ aws_region }}"
+    state: absent
+    wait: no
+    instance_ids: '{{ item.id }}'
+  with_items: "{{ ec2.instances }}"
+
+- name: Create EC2 instances with name
   ec2:
     region: "{{ aws_region }}"
     key_name: "{{ ec2_key_name }}"
@@ -10,9 +28,10 @@
     count: 1
     vpc_subnet_id: "{{ public_subnet_id }}"
     assign_public_ip: yes
+
     instance_tags:
-      Name: "{{ec2_instance_name}}"
-    register: ec2
+      Name: "{{ ec2_instance_name }}"
+  register: ec2
 
 - name: Wait till SSH is up
   wait_for: host={{ item.public_ip }} port=22 state=started

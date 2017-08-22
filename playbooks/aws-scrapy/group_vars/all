@@ -1,6 +1,6 @@
 aws_region: 'eu-west-1'
-aws_access_key: "{{ lookup('env','AWS_ACCESS_KEY') }}"
-aws_secret_key: "{{ lookup('env','AWS_SECRET_KEY') }}"
+#aws_access_key: "{{ lookup('env','AWS_ACCESS_KEY_ID)') }}"
+#aws_secret_key: "{{ lookup('env','AWS_SECRET_ACCESS_KEY') }}"
 
 vpc_name: 'vpc-scrapy'
 vpc_cidr_block: '10.1.0.0/16'
@@ -11,5 +11,5 @@ private_subnet_1_cidr: '10.1.2.0/24'
 ec2_ami_id: 'ami-ebd02392'
 ec2_type: 't2.small'
 ec2_key_name: 'eatcode-scrapy'
-ec2_instance_name: 'eatcode-scrapy
+ec2_instance_name: 'eatcode-scrapy'
 

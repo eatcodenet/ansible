@@ -97,8 +97,8 @@
   ec2_vpc_route_table:
     vpc_id: "{{ vpc_id }}"
     region: "{{ aws_region }}"
-    aws_access_key: "{{ aws_access_key }}"
-    aws_secret_key: "{{ aws_secret_key }}"
+#    aws_access_key: "{{ aws_access_key }}"
+#    aws_secret_key: "{{ aws_secret_key }}"
     tags:
       Name: "Public subnet route"
     subnets:
