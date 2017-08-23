@@ -3,19 +3,18 @@
   ec2_remote_facts:
     region: "{{ aws_region }}"
     filters:
+      instance-state-name: running
       "tag:Name": "{{ ec2_instance_name }}"
   register: ec2
 
-- name: debug
-  debug: var=ec2
-
-- name: Delete EC2 instances with same name
+- name: Delete EC2 instances with same name if delete_ec2 flag set
   ec2:
     region: "{{ aws_region }}"
     state: absent
     wait: no
     instance_ids: '{{ item.id }}'
   with_items: "{{ ec2.instances }}"
+  when: ec2_delete 
 
 - name: Create EC2 instances with name
   ec2:
@@ -28,18 +27,26 @@
     count: 1
     vpc_subnet_id: "{{ public_subnet_id }}"
     assign_public_ip: yes
-
     instance_tags:
       Name: "{{ ec2_instance_name }}"
+  when: not 'instances' in ec2.keys()
+
+#- name: Wait till SSH is up
+#  wait_for: host={{ item.public_ip_address }} port=22 state=present
+#  with_items: "{{ ec2.instances }}"
+
+- name: List running EC2 instances with name
+  ec2_remote_facts:
+    region: "{{ aws_region }}"
+    filters:
+      instance-state-name: running
+      "tag:Name": "{{ ec2_instance_name }}"
   register: ec2
 
-- name: Wait till SSH is up
-  wait_for: host={{ item.public_ip }} port=22 state=started
-  with_items: "{{ ec2.instances }}"
+- name: debug
+  debug: var=ec2.instances
 
 - name: Add hosts to ansible group
-  add_host: hostname={{ item.public_ip }} group=scrapy_instances
+  add_host: hostname={{ item.public_ip_address }} group=scrapy_instances
   with_items: "{{ ec2.instances }}"
-
-
 

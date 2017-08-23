@@ -2,7 +2,12 @@
 - name: AWS scrapy VPC
   hosts: local
   roles:
-  - vpc
-  - ec2
+    - vpc
+    - ec2
+
+- name: Install mongodb
+  hosts: scrapy_instances
+  roles:
+    - { role: mongodb, become: yes}
 
 

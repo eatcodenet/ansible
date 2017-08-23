@@ -5,8 +5,6 @@
     - name: Stop instances
       ec2:
         region: "{{ aws_region }}"
-        aws_access_key: "{{ aws_access_key }}"
-        aws_secret_key: "{{ aws_secret_key }}"
         state: "stopped"
         instance_tags:
           Name: "{{ ec2_key_name }}"
