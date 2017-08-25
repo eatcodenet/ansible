@@ -1,0 +1,21 @@
+---
+- name: Install Scrapy prereqs
+  yum: pkg={{item}} state=present
+  with_items:
+    - gcc
+    - python35
+    - python35-devel 
+    - python35-pip 
+    - libxml2 
+    - libxml2-devel 
+    - libxslt
+    - libxslt-devel
+    - libffi 
+    - libffi-devel 
+    - openssl 
+    - openssl-devel
+
+- name: Install Scrapy
+  pip:
+    executable: pip-3.5
+    name: scrapy

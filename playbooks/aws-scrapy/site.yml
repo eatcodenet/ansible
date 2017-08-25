@@ -5,9 +5,10 @@
     - vpc
     - ec2
 
-- name: Install mongodb
+- name: Install scrapy and mongo
   hosts: scrapy_instances
   roles:
-    - { role: mongodb, become: yes}
+    - { role: scrapy, become: yes }
+    - { role: mongodb, become: yes }
 
 

@@ -11,7 +11,6 @@
 - name: Install mongodb
   yum: pkg={{item}} state=present
   with_items:
-    - python35
     - mongodb-org
   notify: restart mongod
 
