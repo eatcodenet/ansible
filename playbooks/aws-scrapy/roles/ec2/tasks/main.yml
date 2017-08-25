@@ -3,7 +3,7 @@
   ec2_remote_facts:
     region: "{{ aws_region }}"
     filters:
-      instance-state-name: running
+      instance-state-name: [running, stopped]
       "tag:Name": "{{ ec2_instance_name }}"
   register: ec2
 
@@ -29,7 +29,7 @@
     assign_public_ip: yes
     instance_tags:
       Name: "{{ ec2_instance_name }}"
-  when: not 'instances' in ec2.keys()
+  when: not ec2.instances
 
 #- name: Wait till SSH is up
 #  wait_for: host={{ item.public_ip_address }} port=22 state=present
